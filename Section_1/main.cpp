@@ -6,7 +6,49 @@ Line
 Comment
 */
 
+/*
+General:
+    - Run code w/ 'g++ main.cpp -o newName'
+        - With every added .cpp file, you'll need to include them after g++ for example
+        'g++ main.cpp basicCalc.cpp -o main'
+        - To execute code ./main
+    - Notice how on occasion the '::' operator is used? This is called the scope resolution operator. It tells the
+    preprocessor where to find the function / variable. std is the standard namespace, it defines a bunch of
+    variables and functions that will be used throughout the code.
+*/
+
 #include <iostream> // stands for input / output library
+// DO NOT INCLUDE .CPP FILES! You can get all kinds of weird collisions (includes, funcs, etx)
+// Instead include a header file, they end in '.h'
+#include "basicCalc.h" // user defined files are "" base cpp libraries are in <>
+// Do not use 'using namespace std' this may make the scope resolution operator unnecessary, but it can cause
+// collisions in large code bases. Okay for small projects.
+
+// Let's pretend that exampleFunction used to take an integer parameter, later on we deemed this non-essential.
+// We have a whole bunch of existing function calls that have the parameter filled in. Don't change them!
+// Leave a hanging type with no name, it will accept a func call that has that param blank, AND filled out.
+void exampleFunction(int)
+{
+    std::cout << "Welcome to my simple calculator program..." << std::endl;
+    return; // not necessary to exit function but allowed. may be useful to exit early.
+}
+int exFuncReturn()
+{
+    std::cout << "Calculator is functioning and ready to go, returning a value of 1..." << std::endl;
+    return 1; // functions can ONLY return one value.
+}
+void exFuncParam(int param)
+{
+    std::cout << "Calibrating, the number given is: " << param << std::endl;
+}
+void exFunc3Params(int param1, int param2, int param3)
+{
+    std::cout << "Calibrating, the numbers given are: " << param1 << ", " << param2;
+    std::cout << ", and " << param3 << std::endl;
+}
+
+// Notice all the short functions at the top, for long functions you can define them below where they are called
+// and then forward declare them.
 
 // The int main() function is the entry point of the program
 // Always returns of type int, 0 means successful termination
@@ -44,5 +86,17 @@ int main()
     // Ternary, operation between three values only one will be mentioned w/ conditionals
     // Nullary, only the throw operator will be mentioned w/ error handling
 
+    std::cout << "\n";
+    exampleFunction(0);
+    exFuncReturn();
+    exFuncParam('a');
+    exFunc3Params('a', 'b', 'c');
+
+    std::cout << "\n";
     return 0;
+}
+
+void functionBelow()
+{
+    std::cout << "Empty calibrating..." << std::endl;
 }
