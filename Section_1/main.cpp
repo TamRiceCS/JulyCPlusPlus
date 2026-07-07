@@ -15,6 +15,7 @@ General:
     - Notice how on occasion the '::' operator is used? This is called the scope resolution operator. It tells the
     preprocessor where to find the function / variable. std is the standard namespace, it defines a bunch of
     variables and functions that will be used throughout the code.
+    - TOD0: Come back and handle improper user inputs!
 */
 
 #include <iostream> // stands for input / output library
@@ -23,6 +24,7 @@ General:
 #include "basicCalc.h" // user defined files are "" base cpp libraries are in <>
 // Do not use 'using namespace std' this may make the scope resolution operator unnecessary, but it can cause
 // collisions in large code bases. Okay for small projects.
+#include <string>
 
 // Let's pretend that exampleFunction used to take an integer parameter, later on we deemed this non-essential.
 // We have a whole bunch of existing function calls that have the parameter filled in. Don't change them!
@@ -93,6 +95,110 @@ int main()
     exFunc3Params('a', 'b', 'c');
 
     std::cout << "\n";
+
+    std::cout << "You can add 1 + 2 ... " << add(1, 2) << std::endl;
+    std::cout << "You can subtract 10 - 4... " << subtract(10, 4) << std::endl;
+    std::cout << "You can multiply 20 * 10... " << multiply(20, 10) << std::endl;
+    std::cout << "You can divide 100 / 5.... " << divide(100, 5) << std::endl;
+    std::cout << "You can iter up 50... " << iterUp(50) << std::endl;
+    std::cout << "You can iter down 50... " << iterDown(50) << std::endl;
+    std::cout << "You can self multiply 100... " << multiplySelf(100) << std::endl;
+    std::cout << "You can self divide 100... " << divideSelf(100) << std::endl;
+
+    std::cout << "\n";
+    std::cout << "Alright, your turn!" << std::endl;
+    std::string userInput = "";
+    int operand1 = -999;
+    int operand2 = -999;
+    std::string operation = "";
+    char exit = 'n';
+
+    while (true)
+    {
+        std::cout << "\nWould you like to exit? (y/n): ";
+        std::cin >> exit;
+        if (exit == 'Y' || exit == 'y')
+        {
+            break;
+        }
+        while (operand1 == -999)
+        {
+            std::cout << "\nPlease enter an operand: ";
+            std::cin >> operand1;
+        }
+        while (operation == "")
+        {
+            std::cout << "\nPlease pick an operation: " << std::endl;
+            std::cout << "(+, -, *, /, ++, --, *=, or /=)" << std::endl;
+            std::cout << "Your choice: ";
+            std::cin >> operation;
+        }
+
+        if (operation == "++")
+        {
+            std::cout << "Iter Up: " << iterUp(operand1) << std::endl;
+            operand1 = -999;
+            operation = "";
+            continue;
+        }
+        else if (operation == "--")
+        {
+            std::cout << "Iter Down: " << iterDown(operand1) << std::endl;
+            operand1 = -999;
+            operation = "";
+            continue;
+        }
+        else if (operation == "*=")
+        {
+            std::cout << "Self Multiply: " << multiplySelf(operand1) << std::endl;
+            operand1 = -999;
+            operation = "";
+            continue;
+        }
+        else if (operation == "/=")
+        {
+            std::cout << "Self Divide: " << divideSelf(operand1) << std::endl;
+            operand1 = -999;
+            operation = "";
+            continue;
+        }
+
+        while (operand2 == -999)
+        {
+            std::cout << "\nPlease enter another operand: ";
+            std::cin >> operand2;
+        }
+
+        if (operation == "+")
+        {
+            std::cout << "\nThe answer is:" << add(operand1, operand2) << std::endl;
+            operand1 = -999;
+            operation = "";
+            operand2 = -999;
+            continue;
+        }
+
+        else if (operation == "-")
+        {
+            std::cout << "\nThe answer is:" << subtract(operand1, operand2) << std::endl;
+            operand1 = -999;
+            operation = "";
+            operand2 = -999;
+            continue;
+        }
+
+        else if (operation == "*")
+        {
+            std::cout << "\nThe answer is:" << multiply(operand1, operand2) << std::endl;
+            operand1 = -999;
+            operation = "";
+            operand2 = -999;
+            continue;
+        }
+        std::cin.clear();
+    }
+    std::cout << "\n";
+
     return 0;
 }
 

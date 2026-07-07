@@ -20,11 +20,11 @@ int divide(int num1, int num2)
 
 int iterUp(int num)
 {
-    return num++;
+    return ++num;
 }
 int iterDown(int num)
 {
-    return num--;
+    return --num;
 }
 int multiplySelf(int num)
 {
