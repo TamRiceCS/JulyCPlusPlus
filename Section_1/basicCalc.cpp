@@ -1,3 +1,16 @@
+/*
+Order of C++ Operations
+- fail safe in case of a tie is left most evaluated first
+() Parentheses
+*, /, % Multiplication, Division, Modulus
++, - Addition, Subtraction
+>, <, >=, <= Comparison
+==, != Equality
+&& Logical AND
+|| Logical OR
+= Assignment
+*/
+
 int add(int num1, int num2)
 {
     return num1 + num2;

@@ -1,8 +1,13 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdint>
+#include <string>
 // sizes of types are not standard over all OS or system types. Operate within min size.
 // the /n you see sometimes is called an escape character, it represents a newline
+
+void echo(std::string repeat);
+void betterEcho(std::string_view repeatView);
+
 int main()
 {
     // rationals
@@ -94,7 +99,7 @@ int main()
     // ways to convert fundamental types from one type to another:
     // one, static_cast
     std::cout << "\nConvert w/ static cast:" << static_cast<int>(true) << std::endl;
-    std::cout << "\n Convert w/ (): " << (int)true << std::endl;
+    std::cout << "\nConvert w/ C-style cast (): " << (int)true << std::endl;
 
     // there two types of constants: named and unnamed.
     // unnamed constants are like the number 5, it is always 5.
@@ -103,6 +108,32 @@ int main()
     // return variables can be const but they are considered bad practice
 
     // strings are not a built in type, c version is an array of chars ending in '\0'(null char)
+    // Need to include <string>
+    std::cout << "\n";
+    std::string intro = "Hello, my name is Tamara";
+    echo(intro); // passing a whole string is expensive, don't do it
+
+    std::string_view introView = intro; // basically a string ptr
+    betterEcho(introView);
+    intro = "Meow, my name is Babby Kettin";
+
+    echo(intro);
+    betterEcho(introView); // this will be strange because stringView hasn't been updated
+    introView = intro;
+    betterEcho(introView);
+    // Do not return stringViews, many reasons not to
+
     std::cout << "\n";
     return 0;
+}
+
+void echo(std::string repeat)
+{
+    std::cout << repeat << std::endl;
+}
+
+// does not create a copy of a char array!
+void betterEcho(std::string_view repeatView)
+{
+    std::cout << repeatView << std::endl;
 }
