@@ -2,11 +2,17 @@
 #include <iomanip>
 #include <cstdint>
 #include <string>
+#include <cmath>
+
+#include "conditionals.h"
+
 // sizes of types are not standard over all OS or system types. Operate within min size.
 // the /n you see sometimes is called an escape character, it represents a newline
 
 void echo(std::string repeat);
 void betterEcho(std::string_view repeatView);
+void absoluteFloatCompare(float a, float b, float tolerance);
+void relativeFloatComparebool(float a, float b, float tolerance);
 
 int main()
 {
@@ -124,6 +130,17 @@ int main()
     // Do not return stringViews, many reasons not to
 
     std::cout << "\n";
+    absoluteFloatCompare(1.001, 1.0000023, 1e-2); // notice that there are weird artifacts after known
+    absoluteFloatCompare(1.00001, 1.0000023, 1e-2);
+
+    std::cout << "\n";
+    relativeFloatComparebool(1.001, 1.0000023, 1e-8);
+    relativeFloatComparebool(1.0000000001, 1.000000000023, 1e-8);
+
+    std::cout << "\n";
+    narcissistPledge(true, true, true, true);
+
+    std::cout << "\n";
     return 0;
 }
 
@@ -136,4 +153,46 @@ void echo(std::string repeat)
 void betterEcho(std::string_view repeatView)
 {
     std::cout << repeatView << std::endl;
+}
+
+// if the decimal difference between 2 floats is so small it doesn't matter, consider it equal
+void absoluteFloatCompare(float a, float b, float tolerance)
+{
+    float difference = std::abs(a - b); // Need to use cmath to preserve decimal
+    std::cout << "The given tolerance is: " << std::fixed << std::setprecision(8) << tolerance << std::endl;
+
+    if (difference < tolerance)
+    {
+        std::cout << a << " and " << b << " are basically equal..." << std::endl;
+    }
+    else if (a > b)
+    {
+        std::cout << a << " is greater than " << b << std::endl;
+    }
+    else
+    {
+        std::cout << b << " is greater than " << a << std::endl;
+    }
+}
+
+// Find the relative error between two floats if it is less than tolerance they are equal
+// Basically takes into account magnitude 1.00001 vs 1.01 is different to 1.001 and 1.0000000001
+// Closer proximity difference means the difference is more significant
+void relativeFloatComparebool(float a, float b, float tolerance)
+{
+
+    std::cout << "The given tolerance is: " << std::fixed << std::setprecision(8) << tolerance << std::endl;
+
+    if (std::abs(a - b) <= (std::max(std::abs(a), std::abs(b)) * tolerance))
+    {
+        std::cout << a << " and " << b << " are basically equal..." << std::endl;
+    }
+    else if (a > b)
+    {
+        std::cout << a << " is greater than " << b << std::endl;
+    }
+    else
+    {
+        std::cout << b << " is greater than " << a << std::endl;
+    }
 }

@@ -1,0 +1,1 @@
+void narcissistPledge(bool happened, bool bad, bool bigDeal, bool fault);
