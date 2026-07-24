@@ -139,6 +139,11 @@ int main()
 
     std::cout << "\n";
     narcissistPledge(true, true, true, true);
+    std::cout << "\n";
+    bitExample();
+
+    std::cout << "\n";
+    bitwiseOperators(11111, 2, 101010);
 
     std::cout << "\n";
     return 0;
